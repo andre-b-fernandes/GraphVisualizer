@@ -1,40 +1,24 @@
 import React, { Component } from 'react'
-import CytoscapeComponent from 'react-cytoscapejs'
+import { Hero, Container, Title, SubTitle} from 'reactbulma'
+import GraphParameters from './GraphParameters/GraphParameters'
 
-export default class Demo extends Component {
-
-  state = {
-    w: 0,
-    h: 0,
-    elements: [
-      { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
-      { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
-      { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } }
-    ]
-  }
-
-  componentDidMount = () => {
-    this.setState({
-      w: window.innerWidth,
-      h: window.innerHeight
-    })
-    this.setUpListeners()
-  }
-
-  setUpListeners = () => {
-    this.cy.on('click', 'node', (event) => {
-      console.log(event.target)
-    })
-  }
-
+export default class App extends Component {
   render() {
     return (
       <div>
-        <CytoscapeComponent
-          elements={this.state.elements}
-          style={{ width: this.state.w, height: this.state.h }}
-          cy={(cy) => { this.cy = cy }}
-        />
+        <Hero primary small bold>
+          <Hero.Body>
+            <Container>
+              <Title>
+                Graph Visualizer
+              </Title>
+              <SubTitle>
+                Use the tools below to select the type of graph and its parameters.
+              </SubTitle>
+            </Container>
+          </Hero.Body>
+        </Hero>
+        <GraphParameters></GraphParameters>
       </div>
     )
   }
