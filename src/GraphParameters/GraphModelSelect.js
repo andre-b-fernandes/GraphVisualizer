@@ -6,14 +6,13 @@ export var REGULAR_GRAPH_KEY = "RegularGraph";
 export var RANDOM_GRAPH_GILBERT_KEY = "RandomGraphGilbert";
 export var RANDOM_GRAPH_ERDOS_KEY = "RandomGraphErdos";
 export var SMALL_WORLD_GRAPH_KEY = "SmallWorldGraph";
-
-export var KEY_NAME_MODEL = "model";
+export var SELECTED_GRAPH_KEY = REGULAR_GRAPH_KEY;
 
 export default class GraphSelectModel extends GraphSelect {
     constructor(props) {
         super(props);
         this.state = {
-            selected: REGULAR_GRAPH_KEY
+            selected: SELECTED_GRAPH_KEY
         }
     }
 
