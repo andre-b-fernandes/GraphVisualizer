@@ -1,17 +1,16 @@
 export default class Edge{
-    constructor(id, node_out_id, node_in_id, weight = 0){
-        this.id = id
+    constructor(nodeOutID, nodeInID, weight = 0){
         this.weight = weight
-        this.node_out_id = node_out_id
-        this.node_in_id = node_in_id
+        this.nodeOutID = nodeOutID
+        this.nodeInID = nodeInID
     }
 
     toObject(){
         return {
             data: {
-                source: this.node_out_id,
-                target: this.node_in_id,
-                label: "Edge from Node " + this.node_out_id + " to Node " + this.node_in_id 
+                source: this.nodeOutID,
+                target: this.nodeInID,
+                label: "Edge from Node " + this.nodeOutID + " to Node " + this.nodeInID 
             }
         }
     }

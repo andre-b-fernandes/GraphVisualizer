@@ -33,7 +33,7 @@ export default class GraphSmallWorldSelect extends GraphSelect{
                     Mean Degree.
                 </Panel.Block>
                 <Panel.Block>
-                    <input id="sliderDegree" onChange={event =>{ this.updateSelectedSmallWorld("meanDegree", parseInt(event.target.value))}} className="slider has-output is-fullwidth is-info" step="1" min="0" max={"" + this.props.maxEdges} value={"" + this.state.selected.meanDegree} type="range"></input>
+                    <input id="sliderDegree" onChange={event =>{ this.updateSelectedSmallWorld("meanDegree", parseInt(event.target.value))}} className="slider has-output is-fullwidth is-info" step="2" min="0" max={"" + this.props.maxEdges} value={"" + this.state.selected.meanDegree} type="range"></input>
                     <output htmlFor="sliderDegree">{this.state.selected.meanDegree} </output>
                 </Panel.Block>
                 <Panel.Block>

@@ -13,6 +13,7 @@ export default class GraphVisualizer extends Component{
             <CytoscapeComponent  
                 elements={CytoscapeComponent.normalizeElements( this.props.graph.toObject())}
                 style={ { height: this.props.height + "px" } }
+                wheelSensitivity = {0.1}
             />
         </div>
 )

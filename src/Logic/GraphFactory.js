@@ -16,7 +16,7 @@ export default class GraphFactory{
         this.nodes = []
 
         for (let index = 0; index < num_nodes; index+= 4) {
-            let difference = Math.min(num_nodes - index, 4);
+            let difference = Math.min((num_nodes) - index, 4);
             let step = 2*Math.PI/difference 
             // create 4 at each time
             let auxiliary_angle = angle
@@ -32,47 +32,70 @@ export default class GraphFactory{
             angle += angle_step
         }
         this.mapFunctions = {}
-        this.mapFunctions[REGULAR_GRAPH_KEY] = this.generate_undirected_regular.bind(this)
-        this.mapFunctions[RANDOM_GRAPH_GILBERT_KEY] = this.generate_gilbert_graph.bind(this)
+        this.mapFunctions[REGULAR_GRAPH_KEY] = this.generateUndirectedRegular.bind(this)
+        this.mapFunctions[RANDOM_GRAPH_GILBERT_KEY] = this.generateRandomGilbert.bind(this)
+        this.mapFunctions[SMALL_WORLD_GRAPH_KEY] = this.generateSmallWorld.bind(this)
     }
 
-    generate_graph(model, configuration){
+    generateGraph(model, configuration){
         return this.mapFunctions[model](configuration)
     }
 
-    generate_edges(func){
+    generateEdges(func){
         let nodes = [...this.nodes]
         let edges = []
 
         while(nodes.length > 1){
             let node = nodes[0]
             nodes.shift()
-            nodes.forEach(another_node => {
-                func(edges, nodes.length, node.id, another_node.id)
+            nodes.forEach(another_node => {           
+                func(edges, node.id, another_node.id)
             });
         }
-
         return edges
     }
 
 
-    generate_undirected_regular(_configuration) {
-        let edges = this.generate_edges( (e, id, nodeID, anotherNodeID) => {
-            e.push(new Edge(id, nodeID, anotherNodeID))
+    generateUndirectedRegular(_configuration) {
+        let edges = this.generateEdges( (e, nodeID, anotherNodeID) => {
+            e.push(new Edge(nodeID, anotherNodeID))
         });
-
         return new Graph(this.nodes, edges)
     }
 
-    generate_gilbert_graph(probability){
-        let edges = this.generate_edges( (e, id, nodeID, anotherNodeID) => {
+    //G(n,p)
+    generateRandomGilbert(probability){
+        let edges = this.generateEdges( (e, nodeID, anotherNodeID) => {
             let random = Math.random()
             if (random < probability) {
-                e.push(new Edge(id, nodeID, anotherNodeID))
+                e.push(new Edge(nodeID, anotherNodeID))
             }
         });
-
         return new Graph(this.nodes, edges)
     }
 
+    //Watts–Strogatz model
+    generateSmallWorld(configuration){
+        let meanDegree = configuration.meanDegree
+        let probability = configuration.beta
+        let edges = this.generateEdges((e, nodeID, anotherNodeID) => {
+            let value = Math.abs(nodeID - anotherNodeID) % (this.nodes.length - meanDegree/2)
+            if (value >= 0 && value <= meanDegree/2) {
+                let edge = new Edge(nodeID, anotherNodeID)
+                if (Math.random() < probability) {
+                    let nodes = [...this.nodes]
+                    if ((nodeID - meanDegree/2) < 0) {
+                        nodes.splice(nodeID, meanDegree/2 + 1)
+                        nodes.splice(nodes.length - meanDegree/2, meanDegree/2)
+                    }
+                    else{
+                        nodes.splice(nodeID - meanDegree/2, meanDegree + 1)
+                    }
+                    edge.nodeInID = nodes[Math.floor(Math.random() * nodes.length)].id
+                }
+                e.push(edge)
+            }
+        })
+        return new Graph(this.nodes, edges)
+    }
 }

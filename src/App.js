@@ -20,7 +20,7 @@ export default class App extends Component {
     this.setState({ parameters: value}, () =>{
       let height = this.state.parameters.nodes * NODE_HEIGHT + 500
       let gf = new GraphFactory(this.state.parameters.nodes, { height: height, width: document.getElementById('root').clientWidth })
-      this.setState({height: height, graph : gf.generate_graph(this.state.parameters.model, this.state.parameters.configuration)})
+      this.setState({height: height, graph : gf.generateGraph(this.state.parameters.model, this.state.parameters.configuration)})
     })
   }
 
