@@ -1,7 +1,7 @@
 import Edge from './Edge'
 import Node from './Node'
 import Graph from './Graph'
-import {RANDOM_GRAPH_ERDOS_KEY, RANDOM_GRAPH_GILBERT_KEY, REGULAR_GRAPH_KEY, SMALL_WORLD_GRAPH_KEY} from '../GraphParameters/GraphModelSelect'
+import {RANDOM_GRAPH_GILBERT_KEY, REGULAR_GRAPH_KEY, SMALL_WORLD_GRAPH_KEY} from '../GraphParameters/GraphModelSelect'
 
 export default class GraphFactory{
     constructor(num_nodes, dimensions){   

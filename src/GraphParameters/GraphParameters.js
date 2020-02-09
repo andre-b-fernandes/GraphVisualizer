@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
 import { Panel, Button, Checkbox } from 'reactbulma'
-import GraphModelSelect, { REGULAR_GRAPH_KEY, RANDOM_GRAPH_GILBERT_KEY, RANDOM_GRAPH_ERDOS_KEY, SMALL_WORLD_GRAPH_KEY, SELECTED_GRAPH_KEY } from './GraphModelSelect'
+import GraphModelSelect, { REGULAR_GRAPH_KEY, RANDOM_GRAPH_GILBERT_KEY, SMALL_WORLD_GRAPH_KEY, SELECTED_GRAPH_KEY } from './GraphModelSelect'
 import GraphNodesSelect, { INITIAL_STATE_NODES } from './GraphNodesSelect'
 import GraphConfigurationSelect from './GraphConfigurationSelect'
 
 import { INITIAL_STATE_GILBERT } from './GraphGilbertSelect'
-import { INITIAL_STATE_ERDOS } from './GraphErdosRenySelect'
 import { INITIAL_STATE_SMALL_WORLD } from './GraphSmallWorldSelect'
 
 var SELECTED_TAB_MODEL_KEY = "graph_model";
@@ -23,7 +22,6 @@ export default class GraphParameters extends Component {
         this.initialStates = {}
         this.initialStates[REGULAR_GRAPH_KEY] = undefined;
         this.initialStates[RANDOM_GRAPH_GILBERT_KEY] = INITIAL_STATE_GILBERT;
-        this.initialStates[RANDOM_GRAPH_ERDOS_KEY] = INITIAL_STATE_ERDOS;
         this.initialStates[SMALL_WORLD_GRAPH_KEY] = INITIAL_STATE_SMALL_WORLD
         this.state = {
             parameters: {},
