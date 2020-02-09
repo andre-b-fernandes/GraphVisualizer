@@ -1,5 +1,8 @@
+var MIN_EDGE_WEIGHT = 0
+var MAX_EDGE_WEIHT = 100
+
 export default class Edge{
-    constructor(nodeOutID, nodeInID, weight = 0){
+    constructor(nodeOutID, nodeInID, weight = Math.floor(Math.random() * (MAX_EDGE_WEIHT - MIN_EDGE_WEIGHT + 1) + MIN_EDGE_WEIGHT)){
         this.weight = weight
         this.nodeOutID = nodeOutID
         this.nodeInID = nodeInID
@@ -10,7 +13,7 @@ export default class Edge{
             data: {
                 source: this.nodeOutID,
                 target: this.nodeInID,
-                label: "Edge from Node " + this.nodeOutID + " to Node " + this.nodeInID 
+                label: this.weight 
             }
         }
     }
