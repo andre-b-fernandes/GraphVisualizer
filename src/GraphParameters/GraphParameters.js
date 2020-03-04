@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
-import { Panel, Button, Checkbox } from 'reactbulma'
+import { Panel, Button } from 'reactbulma'
 import GraphModelSelect, { REGULAR_GRAPH_KEY, RANDOM_GRAPH_GILBERT_KEY, SMALL_WORLD_GRAPH_KEY, SELECTED_GRAPH_KEY } from './GraphModelSelect'
 import GraphNodesSelect, { INITIAL_STATE_NODES } from './GraphNodesSelect'
 import GraphConfigurationSelect from './GraphConfigurationSelect'
-
+import DijkstraConfiguration, {DJIKSTRA_NODE_KEY, INITIAL_STATE_DJIKSTRA} from './DjikstraConfiguration'
 import { INITIAL_STATE_GILBERT } from './GraphGilbertSelect'
 import { INITIAL_STATE_SMALL_WORLD } from './GraphSmallWorldSelect'
 
 var SELECTED_TAB_MODEL_KEY = "graph_model";
 var SELECTED_TAB_CONFIGURATION_KEY = "graph_configuration";
 var SELECTED_TAB_NODES_KEY = "graph_nodes";
+var SELECTED_TAB_DIJKSTRA_KEY = "graph_djikstra";
 
 var KEY_NAME_MODEL = "model";
 var KEY_NAME_CONFIGURATION = "configuration";
 var KEY_NAME_NODES = "nodes";
+var KEY_NAME_DJIKSTRA = "djikstra";
 
 export default class GraphParameters extends Component {
     constructor(props) {
@@ -23,10 +25,10 @@ export default class GraphParameters extends Component {
         this.initialStates[REGULAR_GRAPH_KEY] = undefined;
         this.initialStates[RANDOM_GRAPH_GILBERT_KEY] = INITIAL_STATE_GILBERT;
         this.initialStates[SMALL_WORLD_GRAPH_KEY] = INITIAL_STATE_SMALL_WORLD
+        this.initialStates[DJIKSTRA_NODE_KEY] = INITIAL_STATE_DJIKSTRA
         this.state = {
             parameters: {},
             selectedTab: SELECTED_TAB_MODEL_KEY,
-            hidden: false,
         }
     }
 
@@ -35,6 +37,7 @@ export default class GraphParameters extends Component {
         this.setState(prevState => {
             let parameters = Object.assign({}, prevState.parameters)
             parameters[KEY_NAME_NODES] = INITIAL_STATE_NODES;
+            parameters[KEY_NAME_DJIKSTRA] = INITIAL_STATE_DJIKSTRA
             return { parameters }
         }, () => {
             this.props.updateGraph(this.state.parameters)
@@ -54,8 +57,7 @@ export default class GraphParameters extends Component {
 
     render() {
         return (
-            <div >
-                <div hidden={this.state.hidden}>
+            <div hidden={this.props.hidden} >
                     <Panel>
                         <Panel.Heading>
                             Parameters
@@ -70,14 +72,18 @@ export default class GraphParameters extends Component {
                             <Panel.Tab onClick={() => this.setState({ selectedTab: SELECTED_TAB_NODES_KEY })} active={this.state.selectedTab === SELECTED_TAB_NODES_KEY}>
                                 Number of Nodes
                     </Panel.Tab>
+                    <Panel.Tab onClick={() => this.setState({ selectedTab: SELECTED_TAB_DIJKSTRA_KEY })} active={this.state.selectedTab === SELECTED_TAB_DIJKSTRA_KEY}>
+                                Dijkstra Options
+                    </Panel.Tab>
+                    
                         </Panel.Tabs>
                         <GraphModelSelect keyName={KEY_NAME_MODEL} hidden={this.state.selectedTab !== SELECTED_TAB_MODEL_KEY} updateParameterInformation={this.updateParameters}></GraphModelSelect>
                         <GraphNodesSelect keyName={KEY_NAME_NODES} hidden={this.state.selectedTab !== SELECTED_TAB_NODES_KEY} updateParameterInformation={this.updateParameters} ></GraphNodesSelect>
                         <GraphConfigurationSelect maxEdges={this.state.parameters[KEY_NAME_NODES] * (this.state.parameters[KEY_NAME_NODES] - 1) / 2} keyName={KEY_NAME_CONFIGURATION} model={this.state.parameters[KEY_NAME_MODEL]} hidden={this.state.selectedTab !== SELECTED_TAB_CONFIGURATION_KEY} updateParameterInformation={this.updateParameters}></GraphConfigurationSelect>
+                        <DijkstraConfiguration keyName={KEY_NAME_DJIKSTRA} updateDjikstra={this.props.updateDjikstra} maxNodes={this.state.parameters[KEY_NAME_NODES]} hidden={this.state.selectedTab !== SELECTED_TAB_DIJKSTRA_KEY} updateParameterInformation={this.updateParameters}> </DijkstraConfiguration>
                         <Button primary fullwidth onClick={() => { this.props.updateGraph(this.state.parameters) }}> Run </Button>
                     </Panel>
-                </div>
-                <Checkbox onClick={() => { this.setState({ hidden: !this.state.hidden }) }}> Hide </Checkbox>
+            
             </div>
 
         )

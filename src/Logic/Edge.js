@@ -6,6 +6,7 @@ export default class Edge{
         this.weight = weight
         this.nodeOutID = nodeOutID
         this.nodeInID = nodeInID
+        this.selected = false
     }
 
     toObject(){
@@ -13,8 +14,9 @@ export default class Edge{
             data: {
                 source: this.nodeOutID,
                 target: this.nodeInID,
-                label: this.weight 
-            }
+                label: this.weight
+            },
+            selected:this.selected
         }
     }
 }

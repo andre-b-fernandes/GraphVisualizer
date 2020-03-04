@@ -37,6 +37,13 @@ export default class GraphVisualizer extends Component{
                       }
                     },
                     {
+                      selector: 'edge:selected',
+                      style:{
+                        "opacity": "0.4",
+                        "line-color": "#0ff",
+                      }
+                    },
+                    {
                       selector: '.active',
                       style:{
                         "line-color": "blue"
