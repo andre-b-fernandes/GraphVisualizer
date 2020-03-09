@@ -80,7 +80,7 @@ export default class GraphParameters extends Component {
                         <GraphModelSelect keyName={KEY_NAME_MODEL} hidden={this.state.selectedTab !== SELECTED_TAB_MODEL_KEY} updateParameterInformation={this.updateParameters}></GraphModelSelect>
                         <GraphNodesSelect keyName={KEY_NAME_NODES} hidden={this.state.selectedTab !== SELECTED_TAB_NODES_KEY} updateParameterInformation={this.updateParameters} ></GraphNodesSelect>
                         <GraphConfigurationSelect maxEdges={this.state.parameters[KEY_NAME_NODES] * (this.state.parameters[KEY_NAME_NODES] - 1) / 2} keyName={KEY_NAME_CONFIGURATION} model={this.state.parameters[KEY_NAME_MODEL]} hidden={this.state.selectedTab !== SELECTED_TAB_CONFIGURATION_KEY} updateParameterInformation={this.updateParameters}></GraphConfigurationSelect>
-                        <DijkstraConfiguration keyName={KEY_NAME_DJIKSTRA} updateDjikstra={this.props.updateDjikstra} maxNodes={this.state.parameters[KEY_NAME_NODES]} hidden={this.state.selectedTab !== SELECTED_TAB_DIJKSTRA_KEY} updateParameterInformation={this.updateParameters}> </DijkstraConfiguration>
+                        <DijkstraConfiguration keyName={KEY_NAME_DJIKSTRA} updateDjikstra={this.props.updateDjikstra} maxNodes={this.state.parameters[KEY_NAME_NODES] - 1} hidden={this.state.selectedTab !== SELECTED_TAB_DIJKSTRA_KEY} updateParameterInformation={this.updateParameters}> </DijkstraConfiguration>
                         <Button primary fullwidth onClick={() => { this.props.updateGraph(this.state.parameters) }}> Run </Button>
                     </Panel>
             
